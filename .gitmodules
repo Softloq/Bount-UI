@@ -1,0 +1,4 @@
+[submodule "GL"]
+	path = GL
+	url = https://github.com/Softloq/Bount-Game-GL.git
+	ignore = dirty
