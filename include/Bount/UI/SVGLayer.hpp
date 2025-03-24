@@ -13,11 +13,16 @@
 
 #include <include/gpu/ganesh/SkSurfaceGanesh.h>
 
-
 #include <include/core/SkSurface.h>
 #include <include/core/SkCanvas.h>
 #include <include/core/SkPaint.h>
 #include <include/core/SkColorSpace.h>
+
+#include <include/core/SkStream.h>
+
+#include <include/svg/SkSVGCanvas.h>
+#include <modules/svg/include/SkSVGDOM.h>
+#include <modules/svg/include/SkSVGTypes.h>
 
 namespace Bount::UI
 {
@@ -25,6 +30,8 @@ class SVGLayer : public GL::Layer
 {
     sk_sp<GrDirectContext> _context;
     sk_sp<SkSurface> _surface;
+    sk_sp<SkData> _data;
+    sk_sp<SkSVGDOM> _dom;
 
 public:
     BOUNT_UI_API SVGLayer();

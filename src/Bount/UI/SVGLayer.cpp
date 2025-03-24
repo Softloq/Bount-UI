@@ -33,6 +33,17 @@ BOUNT_UI_API SVGLayer::SVGLayer()
     SkImageInfo imageInfo = SkImageInfo::Make(800, 600, colorType, kPremul_SkAlphaType);
 
     _surface = SkSurfaces::WrapBackendRenderTarget(_context.get(), backendRenderTarget, kBottomLeft_GrSurfaceOrigin, colorType, nullptr, &surfaceProps);
+
+    // Raw SVG text.
+    const char* svgText = R"(
+        <svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="100" cy="100" r="80" fill="green" />
+            <text x="50" y="120" font-size="30" fill="white">SVG Text</text>
+        </svg>
+    )";
+
+    SkMemoryStream svgStream(svgText, strlen(svgText));
+    _dom = SkSVGDOM::MakeFromStream(svgStream);
 }
 BOUNT_UI_API SVGLayer::~SVGLayer()
 {
@@ -48,9 +59,11 @@ BOUNT_UI_API void SVGLayer::draw()
     SkCanvas* canvas = _surface->getCanvas();
     canvas->clear(SK_ColorBLUE);
 
-    SkPaint paint;
-    paint.setColor(SK_ColorRED);
-    canvas->drawCircle(400, 300, 100, paint);
+    // SkPaint paint;
+    // paint.setColor(SK_ColorRED);
+    // canvas->drawCircle(400, 300, 100, paint);
+
+    _dom->render(canvas);
 
     _context->flush();
 }
