@@ -18,7 +18,7 @@ endif()
 
 add_subdirectory(${BOUNT_GL_MODULE} GL)
 
-set(SKIA_VERSION 2025-03-23)
+set(SKIA_VERSION 2025-03-24)
 if(NOT EXISTS "${CMAKE_CURRENT_LIST_DIR}/external/skia-${SKIA_VERSION}.zip")
     file(DOWNLOAD "https://github.com/Softloq/Skia-Prebuilt/releases/download/v${SKIA_VERSION}/skia-win64.zip" "${CMAKE_CURRENT_LIST_DIR}/external/skia-${SKIA_VERSION}.zip" SHOW_PROGRESS)
 endif()
