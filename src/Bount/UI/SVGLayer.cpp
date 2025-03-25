@@ -25,7 +25,7 @@ BOUNT_UI_API SVGLayer::~SVGLayer()
     
 }
 
-BOUNT_UI_API void SVGLayer::handleEvent()
+BOUNT_UI_API void SVGLayer::handleEvent(const GL::Event& event)
 {
 
 }

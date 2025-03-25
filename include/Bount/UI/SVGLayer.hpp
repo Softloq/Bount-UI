@@ -16,7 +16,7 @@ public:
     BOUNT_UI_API SVGLayer();
     BOUNT_UI_API ~SVGLayer();
 
-    BOUNT_UI_API void handleEvent() override;
+    BOUNT_UI_API void handleEvent(const GL::Event& event) override;
     BOUNT_UI_API void draw() override;
 };
 }
