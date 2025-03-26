@@ -2,14 +2,14 @@
 #define BOUNT_UI_LAYER_HPP
 
 #include "Bount/UI/Lib-Macro.hpp"
+#include "Bount/UI/Surface.hpp"
 #include <Bount/GL/Layer.hpp>
-
-#include <modules/svg/include/SkSVGDOM.h>
 
 namespace Bount::UI
 {
 class Layer : public GL::Layer
 {
+    Surface _surface;
     sk_sp<SkSVGDOM> _dom;
 
 public:

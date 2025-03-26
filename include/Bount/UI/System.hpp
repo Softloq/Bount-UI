@@ -7,8 +7,6 @@
 #include <include/gpu/ganesh/gl/GrGLDirectContext.h>
 #include <include/gpu/ganesh/gl/GrGLInterface.h>
 
-#include <include/core/SkSurface.h>
-#include <include/core/SkCanvas.h>
 #include <include/core/SkFontMgr.h>
 #include <modules/svg/include/SkSVGDOM.h>
 
@@ -22,7 +20,6 @@ class System
     static std::once_flag _init;
 
     sk_sp<GrDirectContext> _context;
-    sk_sp<SkSurface> _surface;
     sk_sp<SkFontMgr> _font_manager;
 
 public:
@@ -36,7 +33,6 @@ public:
 
     BOUNT_UI_API sk_sp<SkSVGDOM> makeSVGDOM(SkStream& stream);
 
-    BOUNT_UI_API SkCanvas* const getCanvas() const;
     BOUNT_UI_API const sk_sp<GrDirectContext>& getContext();
 
 private:
