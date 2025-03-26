@@ -14,7 +14,7 @@ BOUNT_UI_API Layer::Layer()
     std::string svgText = R"(
     <svg width="800" height="600" xmlns="http://www.w3.org/2000/svg">
         <rect x="200" y="200" width="100" height="100" fill="green" />
-        <text x="200" y="200" font-size="20 font-family="arial" fill="black">Hello, Skia!</text>
+        <text x="200" y="200" font-size="20" font-family="arial" fill="black">Hello, Skia!</text>
     </svg>
     )";
     SkMemoryStream svgStream(svgText.c_str(), svgText.length(), true);
