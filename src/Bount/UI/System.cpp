@@ -1,19 +1,14 @@
 #include "Bount/UI/System.hpp"
 
-#include <include/gpu/ganesh/GrDirectContext.h>
-#include <include/gpu/ganesh/gl/GrGLDirectContext.h>
-#include <include/gpu/ganesh/gl/GrGLInterface.h>
-
 #include <include/gpu/ganesh/SkSurfaceGanesh.h>
-
 #include <include/gpu/ganesh/GrBackendSurface.h>
 #include <include/gpu/ganesh/gl/GrGLBackendSurface.h>
-
 #include <src/gpu/ganesh/gl/GrGLDefines.h>
 
 #include <include/core/SkColorSpace.h>
-
 #include <include/core/SkGraphics.h>
+
+#include <include/ports/SkTypeface_win.h>
 
 #include <iostream>
 
@@ -30,6 +25,7 @@ BOUNT_UI_API System& System::instance()
     return *_instance;
 }
 BOUNT_UI_API System::System()
+    : _font_manager(SkFontMgr_New_GDI())
 {
 }
 BOUNT_UI_API System::~System()
@@ -37,7 +33,6 @@ BOUNT_UI_API System::~System()
 }
 BOUNT_UI_API bool System::initialize()
 {
-    SkGraphics::Init();
     auto glInterface = GrGLMakeNativeInterface();
     if (!glInterface)
     {
@@ -63,7 +58,6 @@ BOUNT_UI_API bool System::initialize()
 		8, // stencil bits
 		framebufferInfo
     );
-    
 
     SkSurfaceProps surfaceProps(0, kUnknown_SkPixelGeometry);
     SkColorType colorType = kRGBA_8888_SkColorType;
@@ -75,21 +69,25 @@ BOUNT_UI_API bool System::initialize()
         std::cerr << "Error creating SkSurface." << std::endl;
         return false;
     }
-
-    SkGraphics::Init();
-
     return true;
 }
 BOUNT_UI_API void System::shutdown()
 {
 
 }
+
+BOUNT_UI_API sk_sp<SkSVGDOM> System::makeSVGDOM(SkStream& stream)
+{   
+    return SkSVGDOM::Builder().setFontManager(_font_manager).make(stream);
+}
+
 BOUNT_UI_API SkCanvas* const System::getCanvas() const
 {
     return _surface->getCanvas();
 }
-BOUNT_UI_API void System::clear()
+
+BOUNT_UI_API const sk_sp<GrDirectContext>& System::getContext()
 {
-    _context->flush();
+    return _context;
 }
 }
