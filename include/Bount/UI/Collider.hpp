@@ -9,6 +9,8 @@ class Collider
 {
 public:
     BOUNT_UI_API virtual ~Collider() = 0;
+
+    BOUNT_UI_API virtual bool pointCollided(float x, float y) const;
 };
 class BoxCollider : public Collider
 {
@@ -17,7 +19,7 @@ class BoxCollider : public Collider
 
 public:
     BOUNT_UI_API BoxCollider(float x, float y, float width, float height);
-    BOUNT_UI_API bool pointCollided(float x, float y);
+    BOUNT_UI_API bool pointCollided(float x, float y) const override;
 };
 }
 
