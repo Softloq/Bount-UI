@@ -13,6 +13,8 @@
 
 #include <include/core/SkColorSpace.h>
 
+#include <include/core/SkGraphics.h>
+
 #include <iostream>
 
 namespace Bount::UI
@@ -35,6 +37,7 @@ BOUNT_UI_API System::~System()
 }
 BOUNT_UI_API bool System::initialize()
 {
+    SkGraphics::Init();
     auto glInterface = GrGLMakeNativeInterface();
     if (!glInterface)
     {
@@ -64,7 +67,7 @@ BOUNT_UI_API bool System::initialize()
 
     SkSurfaceProps surfaceProps(0, kUnknown_SkPixelGeometry);
     SkColorType colorType = kRGBA_8888_SkColorType;
-    SkImageInfo imageInfo = SkImageInfo::Make(800, 600, colorType, kPremul_SkAlphaType);
+    // SkImageInfo imageInfo = SkImageInfo::Make(800, 600, colorType, kPremul_SkAlphaType);
 
     _surface = SkSurfaces::WrapBackendRenderTarget(_context.get(), backendRenderTarget, kBottomLeft_GrSurfaceOrigin, colorType, nullptr, &surfaceProps);
     if (!_surface)
@@ -72,6 +75,8 @@ BOUNT_UI_API bool System::initialize()
         std::cerr << "Error creating SkSurface." << std::endl;
         return false;
     }
+
+    SkGraphics::Init();
 
     return true;
 }

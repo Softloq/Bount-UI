@@ -1,5 +1,5 @@
-#ifndef BOUNT_UI_SVG_LAYER_HPP
-#define BOUNT_UI_SVG_LAYER_HPP
+#ifndef BOUNT_UI_LAYER_HPP
+#define BOUNT_UI_LAYER_HPP
 
 #include "Bount/UI/Lib-Macro.hpp"
 #include <Bount/GL/Layer.hpp>
@@ -8,13 +8,13 @@
 
 namespace Bount::UI
 {
-class SVGLayer : public GL::Layer
+class Layer : public GL::Layer
 {
     sk_sp<SkSVGDOM> _dom;
 
 public:
-    BOUNT_UI_API SVGLayer();
-    BOUNT_UI_API ~SVGLayer();
+    BOUNT_UI_API Layer();
+    BOUNT_UI_API ~Layer();
 
     BOUNT_UI_API void handleEvent(const GL::Event& event) override;
     BOUNT_UI_API void draw() override;
