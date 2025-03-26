@@ -23,12 +23,13 @@ BOUNT_UI_API Layer::~Layer()
 {
     
 }
-
 BOUNT_UI_API void Layer::handleEvent(const GL::Event& event)
 {
     if (event.getSDLEvent().type == SDL_EVENT_MOUSE_MOTION)
     {
-        // std::cout << "Mouse Move" << std::endl;
+        auto& motion = event.getSDLEvent().motion;
+        
+        std::cout << "Motion: " << motion.x << std::endl;
     }
 }
 BOUNT_UI_API void Layer::draw()
