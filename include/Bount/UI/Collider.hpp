@@ -20,6 +20,11 @@ class BoxCollider : public Collider
 public:
     BOUNT_UI_API BoxCollider(float x, float y, float width, float height);
     BOUNT_UI_API bool pointCollided(float x, float y) const override;
+
+    BOUNT_UI_API void setX(float x);
+    BOUNT_UI_API void setY(float y);
+    BOUNT_UI_API void setWidth(float width);
+    BOUNT_UI_API void setHeight(float height);
 };
 }
 

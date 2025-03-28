@@ -7,11 +7,14 @@
 
 #include <Bount/GL/Layer.hpp>
 
+#include <unordered_map>
+
 namespace Bount::UI
 {
 class Layer : public GL::Layer
 {
-    std::unique_ptr<Collider> _collider;
+    GL::EventDispatcher _dispatcher;
+    std::unique_ptr<BoxCollider> _collider;
     Surface _surface;
     sk_sp<SkSVGDOM> _dom;
 
@@ -21,6 +24,17 @@ public:
 
     BOUNT_UI_API void handleEvent(const GL::Event& event) override;
     BOUNT_UI_API void draw() override;
+
+// UI Button Features
+public:
+    BOUNT_UI_API void setX(const float x);
+    BOUNT_UI_API void setY(const float y);
+    BOUNT_UI_API void setWidth(const float width);
+    BOUNT_UI_API void setHeight(const float height);
+    
+private:
+    std::unordered_map<std::string, std::string> _updates;
+    float _x, _y, _width, _height;
 };
 }
 

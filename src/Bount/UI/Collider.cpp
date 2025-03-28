@@ -23,4 +23,20 @@ BOUNT_UI_API bool BoxCollider::pointCollided(float x, float y) const
     return _x <= x && x <= _x + _width
        &&  _y <= y && y <= _y + _height;
 }
+BOUNT_UI_API void BoxCollider::setX(float x)
+{
+    _x = x;
+}
+BOUNT_UI_API void BoxCollider::setY(float y)
+{
+    _y = y;
+}
+BOUNT_UI_API void BoxCollider::setWidth(float width)
+{
+    _width = width;
+}
+BOUNT_UI_API void BoxCollider::setHeight(float height)
+{
+    _height = height;
+}
 }

@@ -6,6 +6,7 @@
 #include <include/core/SkSurface.h>
 #include <include/core/SkCanvas.h>
 #include <modules/svg/include/SkSVGDOM.h>
+#include <modules/svg/include/SkSVGRenderContext.h>
 
 namespace Bount::UI
 {
