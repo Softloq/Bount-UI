@@ -6,11 +6,12 @@
 
 namespace Bount::SVG
 {
-class Polyline : public Node
+class Polyline : public Element
 {
 public:
     BOUNT_SVG_API Polyline();
     BOUNT_SVG_API ~Polyline();
+    BOUNT_SVG_API Type getElementType() const override;
 };
 }
 

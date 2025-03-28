@@ -6,11 +6,12 @@
 
 namespace Bount::SVG
 {
-class Rectangle : public Node
+class Rectangle : public Element
 {
 public:
     BOUNT_SVG_API Rectangle();
     BOUNT_SVG_API ~Rectangle();
+    BOUNT_SVG_API Type getElementType() const override;
 };
 }
 

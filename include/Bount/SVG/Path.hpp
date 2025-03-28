@@ -6,11 +6,12 @@
 
 namespace Bount::SVG
 {
-class Path : public Node
+class Path : public Element
 {
 public:
     BOUNT_SVG_API Path();
     BOUNT_SVG_API ~Path();
+    BOUNT_SVG_API Type getElementType() const override;
 };
 }
 

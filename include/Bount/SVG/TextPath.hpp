@@ -6,11 +6,12 @@
 
 namespace Bount::SVG
 {
-class TextPath : public Node
+class TextPath : public Element
 {
 public:
     BOUNT_SVG_API TextPath();
     BOUNT_SVG_API ~TextPath();
+    BOUNT_SVG_API Type getElementType() const override;
 };
 }
 

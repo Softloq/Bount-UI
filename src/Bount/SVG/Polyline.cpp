@@ -5,10 +5,12 @@ namespace Bount::SVG
 {
 BOUNT_SVG_API Polyline::Polyline()
 {
-
 }
 BOUNT_SVG_API Polyline::~Polyline()
 {
-
+}
+BOUNT_SVG_API Element::Type Polyline::getElementType() const
+{
+    return Type::Polyline;
 }
 }

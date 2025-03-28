@@ -6,11 +6,12 @@
 
 namespace Bount::SVG
 {
-class Circle : public Node
+class Circle : public Element
 {
 public:
     BOUNT_SVG_API Circle();
     BOUNT_SVG_API ~Circle();
+    BOUNT_SVG_API Type getElementType() const override;
 };
 }
 

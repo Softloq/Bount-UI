@@ -16,6 +16,29 @@ class Node
 public:
     BOUNT_SVG_API virtual ~Node() = 0;
 };
+
+class Element : public Node
+{
+public:
+    enum class Type
+    {
+        Circle,
+        Ellipse,
+        Rectangle,
+        Image,
+        Line,
+        Path,
+        Polygon,
+        Polyline,
+        Text,
+        TextPath,
+        TSpan
+    };
+    BOUNT_SVG_API Element();
+    BOUNT_SVG_API ~Element();
+
+    BOUNT_SVG_API virtual Type getElementType() const = 0;
+};
 }
 
 #endif

@@ -5,10 +5,12 @@ namespace Bount::SVG
 {
 BOUNT_SVG_API Line::Line()
 {
-
 }
 BOUNT_SVG_API Line::~Line()
 {
-
+}
+BOUNT_SVG_API Element::Type Line::getElementType() const
+{
+    return Type::Line;
 }
 }

@@ -5,10 +5,12 @@ namespace Bount::SVG
 {
 BOUNT_SVG_API Image::Image()
 {
-
 }
 BOUNT_SVG_API Image::~Image()
 {
-
+}
+BOUNT_SVG_API Element::Type Image::getElementType() const
+{
+    return Type::Image;
 }
 }

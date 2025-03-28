@@ -6,11 +6,12 @@
 
 namespace Bount::SVG
 {
-class TSpan : public Node
+class TSpan : public Element
 {
 public:
     BOUNT_SVG_API TSpan();
     BOUNT_SVG_API ~TSpan();
+    BOUNT_SVG_API Type getElementType() const override;
 };
 typedef TSpan TextSpan;
 typedef TSpan Span; 

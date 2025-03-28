@@ -6,11 +6,12 @@
 
 namespace Bount::SVG
 {
-class Polygon : public Node
+class Polygon : public Element
 {
 public:
     BOUNT_SVG_API Polygon();
     BOUNT_SVG_API ~Polygon();
+    BOUNT_SVG_API Type getElementType() const override;
 };
 }
 

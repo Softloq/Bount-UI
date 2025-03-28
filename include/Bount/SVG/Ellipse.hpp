@@ -6,11 +6,12 @@
 
 namespace Bount::SVG
 {
-class Ellipse : public Node
+class Ellipse : public Element
 {
 public:
     BOUNT_SVG_API Ellipse();
     BOUNT_SVG_API ~Ellipse();
+    BOUNT_SVG_API Type getElementType() const override;
 };
 }
 
