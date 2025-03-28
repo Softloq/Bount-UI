@@ -27,12 +27,6 @@ BOUNT_UI_API Layer::Layer()
     _updates["y"] = "0.0";
     _updates["width"] = "100.0";
     _updates["height"] = "100.0";
-    SkSVGText 
-    _dom->
-    if (_dom->findNodeById("button-text")->get()->)
-    {
-        std::cout << "Found" << std::endl;
-    }
 }
 BOUNT_UI_API Layer::~Layer()
 {
