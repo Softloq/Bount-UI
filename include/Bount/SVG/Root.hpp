@@ -3,7 +3,6 @@
 
 #include "Bount/SVG/Lib-Macro.hpp"
 #include "Bount/SVG/Node.hpp"
-#include <memory>
 
 namespace Bount::SVG
 {
