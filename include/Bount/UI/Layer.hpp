@@ -15,8 +15,6 @@ class Layer : public GL::Layer
 {
     GL::EventDispatcher _dispatcher;
     std::unique_ptr<BoxCollider> _collider;
-    Surface _surface;
-    sk_sp<SkSVGDOM> _dom;
 
 public:
     BOUNT_UI_API Layer();

@@ -3,7 +3,7 @@
 
 namespace Bount::SVG
 {
-BOUNT_SVG_API Circle::Circle()
+BOUNT_SVG_API Circle::Circle(File file)
 {
 }
 BOUNT_SVG_API Circle::~Circle()

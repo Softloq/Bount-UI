@@ -1,3 +1,4 @@
+#include "Bount/UI/Precompiled.hpp"
 #include "Bount/UI/Collider.hpp"
 
 namespace Bount::UI
