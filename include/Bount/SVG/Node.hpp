@@ -39,6 +39,13 @@ public:
 
     BOUNT_SVG_API virtual Type getElementType() const = 0;
 };
+
+/** Base Context for the svg++ parser. */
+struct SVGPPContext
+{
+    /** Node that this context will update. */
+    std::weak_ptr<Node> node;
+};
 }
 
 #endif

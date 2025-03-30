@@ -2,9 +2,9 @@
 #define BOUNT_SVG_HELPERS_FILE_HPP
 
 #include "Bount/SVG/Lib-Macro.hpp"
-#include "Bount/SVG/Helpers/String.hpp"
 #include <memory>
 #include <fstream>
+#include <vector>
 
 namespace Bount::SVG
 {
@@ -16,6 +16,8 @@ class File
 public:
     BOUNT_SVG_API File(const String& path);
     BOUNT_SVG_API ~File();
+
+    BOUNT_SVG_API std::vector<Char> Content() const;
 };
 }
 

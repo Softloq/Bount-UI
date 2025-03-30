@@ -1,6 +1,8 @@
 #ifndef BOUNT_UI_LIB_MACRO_HPP
 #define BOUNT_UI_LIB_MACRO_HPP
 
+#include "Bount/Core/Datatypes.hpp"
+
 #if defined(_DLL)
     #define BOUNT_UI_EXPORT __declspec(dllexport)
     #define BOUNT_UI_IMPORT __declspec(dllimport)
