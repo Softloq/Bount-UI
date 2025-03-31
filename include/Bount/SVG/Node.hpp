@@ -44,7 +44,7 @@ public:
 struct SVGPPContext
 {
     /** Node that this context will update. */
-    std::weak_ptr<Node> node;
+    Node* node;
 };
 }
 

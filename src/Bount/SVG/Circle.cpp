@@ -25,7 +25,22 @@ typedef boost::mpl::set<
 >::type ProcessedCircleAttributesT;
 
 BOUNT_SVG_API Circle::Circle(File file)
+    : _shaderProgram{
+        {GL::Shader::Type::Vert, GL::Shader::File{"Resources/SVG/Shaders/Circle.vert"}},
+        {GL::Shader::Type::Frag, GL::Shader::File{"Resources/SVG/Shaders/Circle.frag"}}}
 {
+    _mesh.addVertices({
+        { {-1.0f, 1.0f, 0.0f}, {1.0f, 0.0f, 0.0f}}, // Top Left
+        {  {1.0f, 1.0f, 0.0f}, {1.0f, 0.0f, 0.0f}}, // Top Right
+        { {1.0f, -1.0f, 0.0f}, {1.0f, 0.0f, 0.0f}}, // Bottom Right
+        {{-1.0f, -1.0f, 0.0f}, {1.0f, 0.0f, 0.0f}}  // Bottom Left
+    });
+    _mesh.addIndices({
+        0, 1, 2,    
+        2, 3, 0
+    });
+    _mesh.update();
+
     auto content = file.Content();
     
     XML::Doc doc;
@@ -38,6 +53,7 @@ BOUNT_SVG_API Circle::Circle(File file)
     }
 
     CircleContext context;
+    context.node = this;
     svgpp::document_traversal<
         svgpp::processed_elements<ProcessedCircleElementsT>,
         svgpp::processed_attributes<ProcessedCircleAttributesT>,
@@ -51,6 +67,11 @@ BOUNT_SVG_API Circle::~Circle()
 BOUNT_SVG_API Element::Type Circle::getElementType() const
 {
     return Type::Circle;
+}
+BOUNT_SVG_API void Circle::draw()
+{
+    _shaderProgram.use();
+    _mesh.draw();
 }
 
 BOUNT_SVG_API void CircleContext::set_circle(F64 cx, F64 cy, F64 r)

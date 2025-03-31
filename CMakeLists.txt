@@ -26,6 +26,7 @@ if(NOT TARGET Bount::UI)
     # Resources
     add_custom_target(
         Bount-UI-Resources
+        DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/__run_always
         COMMENT "Copying UI Resources"
         COMMAND ${CMAKE_COMMAND} -E copy_directory_if_different "${CMAKE_CURRENT_LIST_DIR}/resources" "${CMAKE_BINARY_DIR}/$<CONFIG>/bin/Resources")
 
