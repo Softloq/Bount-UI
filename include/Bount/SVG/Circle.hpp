@@ -15,17 +15,21 @@ class Circle : public Element
     GL::Shader::Program _shaderProgram;
     GL::Mesh _mesh;
 
+    F32 _cx, _cy, _r;
+
 public:
     BOUNT_SVG_API Circle(File file);
     BOUNT_SVG_API ~Circle();
     BOUNT_SVG_API Type getElementType() const override;
 
     BOUNT_SVG_API void draw();
+
+    BOUNT_SVG_API void set(F32 cx, F32 cy, F32 r);
 };
 
 struct CircleContext : SVGPPContext
 {
-    BOUNT_SVG_API void set_circle(F64 cx, F64 cy, F64 r);
+    BOUNT_SVG_API void set_circle(F32 cx, F32 cy, F32 r);
 };
 }
 
