@@ -2,7 +2,6 @@
 #define BOUNT_UI_LAYER_HPP
 
 #include "Bount/UI/Lib-Macro.hpp"
-#include "Bount/UI/Surface.hpp"
 #include "Bount/UI/Collider.hpp"
 
 #include <Bount/GL/Layer.hpp>
