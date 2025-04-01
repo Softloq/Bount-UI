@@ -80,7 +80,8 @@ BOUNT_SVG_API void Circle::set(F32 cx, F32 cy, F32 r)
     _cy = cy;
     _r = r;
     _shaderProgram.use();
-    _shaderProgram.setUniformFloat("uCircleCX_CY_R", _cx, _cy, _r);
+    _shaderProgram.setUniformFloat("u_CirclePos", _cx, _cy);
+    _shaderProgram.setUniformFloat("u_CircleRadius", _r);
 }
 
 BOUNT_SVG_API void CircleContext::set_circle(F32 cx, F32 cy, F32 r)

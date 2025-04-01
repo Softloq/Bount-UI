@@ -1,29 +1,33 @@
 #version 330 core
 
-out vec4 fNormal;
-in vec2 outPosition;
-in vec3 outNormal;
+out vec4 frag_Normal;
+in vec2 out_Position;
+in vec3 out_Normal;
 
-uniform vec4 uFill = vec4(0.0f, 0.0f, 0.0f, 1.0f);
-uniform vec3 uCircleCX_CY_R = vec3(100.0f, 100.0f, 100.0f);
-vec2 size_factor = vec2(800.0f, 600.0f);
+uniform vec2 u_Resolution = vec2(800.0f, 600.0f);
+
+uniform vec2 u_CirclePos = vec2(0.0f, 0.0f);
+uniform float u_CircleRadius = 0.0f;
+
+uniform vec4 u_Fill = vec4(0.0f, 0.0f, 0.0f, 1.0f);
+
+vec2 svg_Position = (out_Position + vec2(1.0f, 1.0f))*0.5f;
 
 float smooth_sdf(float dist)
 {
     float aa = fwidth(dist);
-    return smoothstep(-aa, aa, -dist);
+    return smoothstep(-aa, 0.25f, -dist);
 }
 
 float circle_sdf(vec2 p, vec2 center, float radius)
 {
     return length(p - center) - radius;
 }
+
 void main()
 {
-    vec2 p = ((outPosition + vec2(1.0f, 1.0f))/2.0f)*size_factor;
-    vec2 center = uCircleCX_CY_R.xy;
-    float radius = uCircleCX_CY_R.z;
-    float dist = circle_sdf(p, center, radius);
-    float smooth_value = smooth_sdf(dist);
-    fNormal = vec4(uFill.xyz, smooth_value);
+    vec2 p = svg_Position*u_Resolution;
+    float dist = circle_sdf(p, u_CirclePos, u_CircleRadius);
+    float alpha = smooth_sdf(dist);
+    frag_Normal = vec4(u_Fill.xyz, alpha);
 }
