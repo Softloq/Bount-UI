@@ -90,12 +90,12 @@ float rounded_rect_sdf(vec2 p, vec2 center, vec2 size, vec2 radius)
     {
         radius.x = min(size.x, radius.x);
         radius.y = min(size.y, radius.y);
-        float rect1 = rect_sdf(p, center + vec2(0.0f, radius.y/2.0f), vec2(size.x, size.y - radius.y));
-        float rect2 = rect_sdf(p, center + vec2(radius.x/2.0f, 0.0f), vec2(size.x - radius.x, size.y));
-        float ellipse1 = ellipse_sdf(p, center + radius/2.0f, radius/2.0f);
-        float ellipse2 = ellipse_sdf(p, center + vec2(size.x, 0.0f) + vec2(-radius.x/2.0f, radius.y/2.0f), radius/2.0f);
-        float ellipse3 = ellipse_sdf(p, center + vec2(0.0f, size.y) + vec2(radius.x/2.0f, -radius.y/2.0f), radius/2.0f);
-        float ellipse4 = ellipse_sdf(p, center + vec2(size.x, size.y) + vec2(-radius.x/2.0f, -radius.y/2.0f), radius/2.0f);
+        float rect1 = rect_sdf(p, center + vec2(0.0f, radius.y), vec2(size.x, size.y - radius.y*2.0f));
+        float rect2 = rect_sdf(p, center + vec2(radius.x, 0.0f), vec2(size.x - radius.x*2.0f, size.y));
+        float ellipse1 = ellipse_sdf(p, center + radius, radius);
+        float ellipse2 = ellipse_sdf(p, center + vec2(size.x, 0.0f) + vec2(-radius.x, radius.y), radius);
+        float ellipse3 = ellipse_sdf(p, center + vec2(0.0f, size.y) + vec2(radius.x, -radius.y), radius);
+        float ellipse4 = ellipse_sdf(p, center + vec2(size.x, size.y) + vec2(-radius.x, -radius.y), radius);
         return union_sdf(union_sdf(rect1, rect2), union_sdf(union_sdf(ellipse1, ellipse2), union_sdf(ellipse3, ellipse4)));
     }
 }
