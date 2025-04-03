@@ -57,10 +57,23 @@ BOUNT_SVG_API Element::Type Rectangle::getElementType() const
 {
     return Type::Rectangle;
 }
-BOUNT_SVG_API void Rectangle::draw()
+
+BOUNT_SVG_API void Rectangle::updateUniforms()
 {
-    _shaderProgram.use();
-    _mesh.draw();
+    if (_uniformChanges.empty()) return;
+    if (_uniformChanges.contains("u_RectPos"))
+    {
+        _shaderProgram.setUniformFloat("u_RectPos", _x, _y);
+    }
+    if (_uniformChanges.contains("u_RectSize"))
+    {
+        _shaderProgram.setUniformFloat("u_RectSize", _width, _height);
+    }
+    if (_uniformChanges.contains("u_RectRadius"))
+    {
+        _shaderProgram.setUniformFloat("u_RectRadius", _rx, _ry);
+    }
+    _uniformChanges.clear();
 }
 
 BOUNT_SVG_API void Rectangle::set_rect(F32 x, F32 y, F32 width, F32 height, F32 rx, F32 ry)
@@ -71,10 +84,9 @@ BOUNT_SVG_API void Rectangle::set_rect(F32 x, F32 y, F32 width, F32 height, F32 
     _height = height;
     _rx = rx;
     _ry = ry;
-    _shaderProgram.use();
-    _shaderProgram.setUniformFloat("u_RectPos", _x, _y);
-    _shaderProgram.setUniformFloat("u_RectSize", _width, _height);
-    _shaderProgram.setUniformFloat("u_RectRadius", _rx, _ry);
+    _uniformChanges.insert("u_RectPos");
+    _uniformChanges.insert("u_RectSize");
+    _uniformChanges.insert("u_RectRadius");
 }
 BOUNT_SVG_API void Rectangle::set_rect(F32 x, F32 y, F32 width, F32 height)
 {
@@ -83,15 +95,14 @@ BOUNT_SVG_API void Rectangle::set_rect(F32 x, F32 y, F32 width, F32 height)
     _width = width;
     _height = height;
     _shaderProgram.use();
-    _shaderProgram.setUniformFloat("u_RectPos", _x, _y);
-    _shaderProgram.setUniformFloat("u_RectSize", _width, _height);
+    _uniformChanges.insert("u_RectPos");
+    _uniformChanges.insert("u_RectSize");
 }
 
-BOUNT_SVG_API void Rectangle::setRadii(F32 rx, F32 ry)
+BOUNT_SVG_API void Rectangle::set_radius(F32 rx, F32 ry)
 {
     _rx = rx;
     _ry = ry;
-    _shaderProgram.use();
-    _shaderProgram.setUniformFloat("u_RectRadius", _rx, _ry);
+    _uniformChanges.insert("u_RectRadius");
 }
 }

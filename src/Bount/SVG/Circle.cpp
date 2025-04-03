@@ -55,20 +55,27 @@ BOUNT_SVG_API Element::Type Circle::getElementType() const
 {
     return Type::Circle;
 }
-BOUNT_SVG_API void Circle::draw()
+
+BOUNT_SVG_API void Circle::updateUniforms()
 {
-    _shaderProgram.use();
-    _mesh.draw();
+    if (_uniformChanges.empty()) return;
+    if (_uniformChanges.contains("u_CirclePos"))
+    {
+        _shaderProgram.setUniformFloat("u_CirclePos", _cx, _cy);
+    }
+    if (_uniformChanges.contains("u_CircleRadius"))
+    {
+        _shaderProgram.setUniformFloat("u_CircleRadius", _r);
+    }
+    _uniformChanges.clear();
 }
 
 BOUNT_SVG_API void Circle::set_circle(F32 cx, F32 cy, F32 r)
 {
-    std::cout << "X:" << cx << " Y:" << cy << " R:" << r << std::endl;
     _cx = cx;
     _cy = cy;
     _r = r;
-    _shaderProgram.use();
-    _shaderProgram.setUniformFloat("u_CirclePos", _cx, _cy);
-    _shaderProgram.setUniformFloat("u_CircleRadius", _r);
+    _uniformChanges.insert("u_CirclePos");
+    _uniformChanges.insert("u_CircleRadius");
 }
 }

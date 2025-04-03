@@ -4,6 +4,7 @@
 #include "Bount/SVG/Lib-Macro.hpp"
 #include <Bount/GL/Shader.hpp>
 #include <Bount/GL/Mesh.hpp>
+#include <unordered_set>
 #include <memory>
 
 namespace Bount::SVG
@@ -45,11 +46,16 @@ protected:
     GL::Shader::Program _shaderProgram;
     GL::Mesh _mesh;
 
+    std::unordered_set<String> _uniformChanges;
+
 public:
     BOUNT_SVG_API Drawable(GL::Shader::Program&& program);
     BOUNT_SVG_API ~Drawable();
 
-    BOUNT_SVG_API virtual void draw() = 0;
+    BOUNT_SVG_API void draw();
+
+protected:
+    BOUNT_SVG_API virtual void updateUniforms() = 0;
 };
 }
 

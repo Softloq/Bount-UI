@@ -8,7 +8,7 @@
 
 namespace Bount::SVG
 {
-class File
+class File final
 {
     std::unique_ptr<std::ifstream> _file; 
     String _path;

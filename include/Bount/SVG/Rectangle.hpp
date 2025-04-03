@@ -7,8 +7,10 @@
 
 namespace Bount::SVG
 {
-class Rectangle : public Drawable
+class Rectangle final : public Drawable
 {
+    // Shape Attributes
+
     F32 _width, _height, _x, _y, _rx, _ry;
 
 public:
@@ -16,12 +18,12 @@ public:
     BOUNT_SVG_API ~Rectangle();
 
     BOUNT_SVG_API Type getElementType() const override;
-    BOUNT_SVG_API void draw() override;
+    BOUNT_SVG_API void updateUniforms() override;
 
     BOUNT_SVG_API void set_rect(F32 x, F32 y, F32 width, F32 height, F32 rx, F32 ry);
     BOUNT_SVG_API void set_rect(F32 x, F32 y, F32 width, F32 height);
 
-    BOUNT_SVG_API void setRadii(F32 rx, F32 ry);
+    BOUNT_SVG_API void set_radius(F32 rx, F32 ry);
 };
 }
 

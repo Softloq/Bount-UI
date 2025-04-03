@@ -56,10 +56,19 @@ BOUNT_SVG_API Element::Type Ellipse::getElementType() const
 {
     return Type::Ellipse;
 }
-BOUNT_SVG_API void Ellipse::draw()
+
+BOUNT_SVG_API void Ellipse::updateUniforms()
 {
-    _shaderProgram.use();
-    _mesh.draw();
+    if (_uniformChanges.empty()) return;
+    if (_uniformChanges.contains("u_EllipsePos"))
+    {
+        _shaderProgram.setUniformFloat("u_EllipsePos", _cx, _cy);
+    }
+    if (_uniformChanges.contains("u_EllipseRadius"))
+    {
+        _shaderProgram.setUniformFloat("u_EllipseRadius", _rx, _ry);
+    }
+    _uniformChanges.clear();
 }
 
 BOUNT_SVG_API void Ellipse::set_ellipse(F32 cx, F32 cy, F32 rx, F32 ry)
@@ -68,8 +77,7 @@ BOUNT_SVG_API void Ellipse::set_ellipse(F32 cx, F32 cy, F32 rx, F32 ry)
     _cy = cy;
     _rx = rx;
     _ry = ry;
-    _shaderProgram.use();
-    _shaderProgram.setUniformFloat("u_EllipsePos", _cx, _cy);
-    _shaderProgram.setUniformFloat("u_EllipseRadius", _rx, _ry);
+    _uniformChanges.insert("u_EllipsePos");
+    _uniformChanges.insert("u_EllipseRadius");
 }
 }

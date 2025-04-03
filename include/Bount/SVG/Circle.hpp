@@ -7,7 +7,7 @@
 
 namespace Bount::SVG
 {
-class Circle : public Drawable
+class Circle final : public Drawable
 {
     F32 _cx, _cy, _r;
 
@@ -16,7 +16,7 @@ public:
     BOUNT_SVG_API ~Circle();
 
     BOUNT_SVG_API Type getElementType() const override;
-    BOUNT_SVG_API void draw() override;
+    BOUNT_SVG_API void updateUniforms() override;
 
     BOUNT_SVG_API void set_circle(F32 cx, F32 cy, F32 r);
 };
