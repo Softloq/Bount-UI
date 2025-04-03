@@ -2,6 +2,8 @@
 #define BOUNT_SVG_NODE_HPP
 
 #include "Bount/SVG/Lib-Macro.hpp"
+#include <Bount/GL/Shader.hpp>
+#include <Bount/GL/Mesh.hpp>
 #include <memory>
 
 namespace Bount::SVG
@@ -34,17 +36,20 @@ public:
         TextPath,
         TSpan
     };
-    BOUNT_SVG_API Element();
-    BOUNT_SVG_API ~Element();
 
     BOUNT_SVG_API virtual Type getElementType() const = 0;
 };
-
-/** Base Context for the svg++ parser. */
-struct SVGPPContext
+class Drawable : public Element
 {
-    /** Node that this context will update. */
-    Node* node;
+protected:
+    GL::Shader::Program _shaderProgram;
+    GL::Mesh _mesh;
+
+public:
+    BOUNT_SVG_API Drawable(GL::Shader::Program&& program);
+    BOUNT_SVG_API ~Drawable();
+
+    BOUNT_SVG_API virtual void draw() = 0;
 };
 }
 

@@ -1,5 +1,6 @@
 #include "Bount/UI/Precompiled.hpp"
 #include "Bount/SVG/Circle.hpp"
+#include "Bount/SVG/Helpers/svgpp.hpp"
 
 namespace Bount::SVG
 {
@@ -25,22 +26,9 @@ typedef boost::mpl::set<
 >::type ProcessedCircleAttributesT;
 
 BOUNT_SVG_API Circle::Circle(File file)
-    : _shaderProgram{
-        {GL::Shader::Type::Vert, GL::Shader::File{"Resources/SVG/Shaders/Circle.vert"}},
-        {GL::Shader::Type::Frag, GL::Shader::File{"Resources/SVG/Shaders/Circle.frag"}}}
+    : Drawable({{GL::Shader::Type::Vert, GL::Shader::File{"Resources/SVG/Shaders/Circle.vert"}},
+                {GL::Shader::Type::Frag, GL::Shader::File{"Resources/SVG/Shaders/Circle.frag"}}})
 {
-    _mesh.addVertices({
-        { {-1.0f, 1.0f, 0.0f}}, // Top Left
-        {  {1.0f, 1.0f, 0.0f}}, // Top Right
-        { {1.0f, -1.0f, 0.0f}}, // Bottom Right
-        {{-1.0f, -1.0f, 0.0f}}  // Bottom Left
-    });
-    _mesh.addIndices({
-        0, 1, 2,    
-        2, 3, 0
-    });
-    _mesh.update();
-
     auto content = file.Content();
     
     XML::Doc doc;
@@ -52,18 +40,17 @@ BOUNT_SVG_API Circle::Circle(File file)
         return;
     }
 
-    CircleContext context;
-    context.node = this;
     svgpp::document_traversal<
         svgpp::processed_elements<ProcessedCircleElementsT>,
         svgpp::processed_attributes<ProcessedCircleAttributesT>,
         svgpp::attribute_traversal_policy<CircleAttributeTraversalPolicy>,
         svgpp::basic_shapes_policy<CircleShapePolicy>
-    >::load_expected_element(element, context, svgpp::tag::element::circle());
+    >::load_expected_element(element, *this, svgpp::tag::element::circle());
 }
 BOUNT_SVG_API Circle::~Circle()
 {
 }
+
 BOUNT_SVG_API Element::Type Circle::getElementType() const
 {
     return Type::Circle;
@@ -74,18 +61,14 @@ BOUNT_SVG_API void Circle::draw()
     _mesh.draw();
 }
 
-BOUNT_SVG_API void Circle::set(F32 cx, F32 cy, F32 r)
+BOUNT_SVG_API void Circle::set_circle(F32 cx, F32 cy, F32 r)
 {
+    std::cout << "X:" << cx << " Y:" << cy << " R:" << r << std::endl;
     _cx = cx;
     _cy = cy;
     _r = r;
     _shaderProgram.use();
     _shaderProgram.setUniformFloat("u_CirclePos", _cx, _cy);
     _shaderProgram.setUniformFloat("u_CircleRadius", _r);
-}
-
-BOUNT_SVG_API void CircleContext::set_circle(F32 cx, F32 cy, F32 r)
-{
-    static_cast<Circle*>(node)->set(cx, cy, r);
 }
 }

@@ -1,5 +1,6 @@
 #include "Bount/UI/Precompiled.hpp"
 #include "Bount/SVG/Rectangle.hpp"
+#include <Bount/SVG/Helpers/svgpp.hpp>
 
 namespace Bount::SVG
 {
@@ -27,22 +28,9 @@ typedef boost::mpl::set<
     boost::mpl::pair<svgpp::tag::element::rect, svgpp::tag::attribute::ry>
 >::type ProcessedRectangleAttributesT;
 BOUNT_SVG_API Rectangle::Rectangle(File file)
-: _shaderProgram{
-    {GL::Shader::Type::Vert, GL::Shader::File{"Resources/SVG/Shaders/Rectangle.vert"}},
-    {GL::Shader::Type::Frag, GL::Shader::File{"Resources/SVG/Shaders/Rectangle.frag"}}}
+    : Drawable({{GL::Shader::Type::Vert, GL::Shader::File{"Resources/SVG/Shaders/Rectangle.vert"}},
+                {GL::Shader::Type::Frag, GL::Shader::File{"Resources/SVG/Shaders/Rectangle.frag"}}})
 {
-    _mesh.addVertices({
-        { {-1.0f, 1.0f, 0.0f}}, // Top Left
-        {  {1.0f, 1.0f, 0.0f}}, // Top Right
-        { {1.0f, -1.0f, 0.0f}}, // Bottom Right
-        {{-1.0f, -1.0f, 0.0f}}  // Bottom Left
-    });
-    _mesh.addIndices({
-        0, 1, 2,    
-        2, 3, 0
-    });
-    _mesh.update();
-
     auto content = file.Content();
 
     XML::Doc doc;
@@ -54,18 +42,17 @@ BOUNT_SVG_API Rectangle::Rectangle(File file)
         return;
     }
 
-    RectangleContext context;
-    context.node = this;
     svgpp::document_traversal<
         svgpp::processed_elements<ProcessedRectangleElementsT>,
         svgpp::processed_attributes<ProcessedRectangleAttributesT>,
         svgpp::attribute_traversal_policy<RectangleAttributeTraversalPolicy>,
         svgpp::basic_shapes_policy<RectangleShapePolicy>
-    >::load_expected_element(element, context, svgpp::tag::element::rect());
+    >::load_expected_element(element, *this, svgpp::tag::element::rect());
 }
 BOUNT_SVG_API Rectangle::~Rectangle()
 {
 }
+
 BOUNT_SVG_API Element::Type Rectangle::getElementType() const
 {
     return Type::Rectangle;
@@ -76,7 +63,7 @@ BOUNT_SVG_API void Rectangle::draw()
     _mesh.draw();
 }
 
-BOUNT_SVG_API void Rectangle::set(F32 x, F32 y, F32 width, F32 height, F32 rx, F32 ry)
+BOUNT_SVG_API void Rectangle::set_rect(F32 x, F32 y, F32 width, F32 height, F32 rx, F32 ry)
 {
     _x = x;
     _y = y;
@@ -89,7 +76,7 @@ BOUNT_SVG_API void Rectangle::set(F32 x, F32 y, F32 width, F32 height, F32 rx, F
     _shaderProgram.setUniformFloat("u_RectSize", _width, _height);
     _shaderProgram.setUniformFloat("u_RectRadius", _rx, _ry);
 }
-BOUNT_SVG_API void Rectangle::set(F32 x, F32 y, F32 width, F32 height)
+BOUNT_SVG_API void Rectangle::set_rect(F32 x, F32 y, F32 width, F32 height)
 {
     _x = x;
     _y = y;
@@ -106,14 +93,5 @@ BOUNT_SVG_API void Rectangle::setRadii(F32 rx, F32 ry)
     _ry = ry;
     _shaderProgram.use();
     _shaderProgram.setUniformFloat("u_RectRadius", _rx, _ry);
-}
-
-BOUNT_SVG_API void RectangleContext::set_rect(F32 x, F32 y, F32 width, F32 height, F32 rx, F32 ry)
-{
-    static_cast<Rectangle*>(node)->set(x, y, width, height, rx, ry);
-}
-BOUNT_SVG_API void RectangleContext::set_rect(F32 x, F32 y, F32 width, F32 height)
-{
-    static_cast<Rectangle*>(node)->set(x, y, width, height);
 }
 }
