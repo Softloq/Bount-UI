@@ -7,7 +7,7 @@ namespace Bount::SVG
 BOUNT_SVG_API File::File(const String& path)
     : _path(path)
 {
-    _path = Core::Filesystem::BinPath(path);
+    _path = Filesystem::Path(Filesystem::Path::Base::Resources, path).toString();
     _file = std::unique_ptr<std::ifstream>(new std::ifstream(_path.c_str()));
 }
 BOUNT_SVG_API File::~File()
