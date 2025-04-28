@@ -1,4 +1,4 @@
-[submodule "GL"]
-	path = GL
-	url = https://github.com/Softloq/Bount-Game-GL.git
+[submodule "Graphics"]
+	path = .module/Graphics
+	url = https://github.com/Softloq/Bount-Graphics.git
 	ignore = dirty

@@ -1,8 +1,13 @@
-#ifndef BOUNT_UI_PRECOMPILED_HPP
-#define BOUNT_UI_PRECOMPILED_HPP
+/**
+ * @file Precompiled.hpp
+ * @brief Faster compilation for common headers.
+ * @author Brandon Foster (Paradox Gene)
+ */
 
-#include "Bount/GL/Precompiled.hpp"
-#include "Bount/UI/Lib-Macro.hpp"
-#include "Bount/SVG/Lib-Macro.hpp"
-
-#endif
+ #ifndef BOUNT_UI_PRECOMPILED_HPP
+ #define BOUNT_UI_PRECOMPILED_HPP
+ 
+ #include "Bount/Graphics/Precompiled.hpp"
+ #include "Bount/UI/StandardMacros.hpp"
+ 
+ #endif
