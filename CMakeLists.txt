@@ -46,25 +46,26 @@ if(NOT TARGET Bount-UI-Library)
     copy_bount_resources(Bount-UI-Resources Bount-UI)
 endif()
 
-# if((BUILD_BOUNT_UI_EXAMPLES OR BUILD_BOUNT_EXAMPLES) AND (NOT TARGET Bount-UI-Examples))
-#     project(Bount-UI-Examples)
+if((BUILD_BOUNT_UI_EXAMPLES OR BUILD_BOUNT_EXAMPLES) AND (NOT TARGET Bount-UI-Examples))
+    project(Bount-UI-Examples)
 
-#     list(APPEND BOUNT_UI_EXAMPLES BasicShapes)
-#     foreach(example ${BOUNT_UI_EXAMPLES})
-#         file(GLOB_RECURSE BOUNT_UI_EXAMPLE_${example}_SRC
-#             "${CMAKE_CURRENT_LIST_DIR}/examples/${example}/src/**.cc"
-#             "${CMAKE_CURRENT_LIST_DIR}/examples/${example}/src/**.cxx"
-#             "${CMAKE_CURRENT_LIST_DIR}/examples/${example}/src/**.c++"
-#             "${CMAKE_CURRENT_LIST_DIR}/examples/${example}/src/**.cpp"
-#         )
-#         add_executable(Bount-UI-Example-${example} ${BOUNT_UI_EXAMPLE_${example}_SRC})
-#         target_include_directories(Bount-UI-Example-${example} PRIVATE "${CMAKE_CURRENT_LIST_DIR}/examples/${example}/include")
-#         target_link_libraries(Bount-UI-Example-${example} PRIVATE Bount::UI)
-#         set_bount_example_common_properties(Bount-UI-Example-${example} ${example})
-#     endforeach()
+    list(APPEND BOUNT_UI_EXAMPLES BasicShapes)
+    foreach(example ${BOUNT_UI_EXAMPLES})
+        file(GLOB_RECURSE BOUNT_UI_EXAMPLE_${example}_SRC
+            "${CMAKE_CURRENT_LIST_DIR}/examples/${example}/src/**.cc"
+            "${CMAKE_CURRENT_LIST_DIR}/examples/${example}/src/**.cxx"
+            "${CMAKE_CURRENT_LIST_DIR}/examples/${example}/src/**.c++"
+            "${CMAKE_CURRENT_LIST_DIR}/examples/${example}/src/**.cpp"
+        )
+        add_executable(Bount-UI-Example-${example} ${BOUNT_UI_EXAMPLE_${example}_SRC})
+        target_include_directories(Bount-UI-Example-${example} PRIVATE "${CMAKE_CURRENT_LIST_DIR}/examples/${example}/include")
+        target_link_libraries(Bount-UI-Example-${example} PRIVATE Bount::UI)
+        set_bount_example_common_properties(Bount-UI-Example-${example} ${example})
+    endforeach()
 
-#     add_custom_command(TARGET Bount-UI-Example-${SOME_BOUNT_UI_EXAMPLE}
-#         POST_BUILD
-#         COMMAND ${CMAKE_COMMAND} -E copy_directory_if_different "${CMAKE_CURRENT_LIST_DIR}/examples/Resources" "${CMAKE_BINARY_DIR}/$<CONFIG>/Resources"
-#     )
-# endif()
+    add_custom_command(TARGET Bount-UI
+        POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory_if_different
+            "${CMAKE_CURRENT_LIST_DIR}/examples/Resources"
+            "${CMAKE_BINARY_DIR}/$<CONFIG>/Resources"
+    )
+endif()

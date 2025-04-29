@@ -1,25 +1,26 @@
-#include <Bount/GL/Subsystem.hpp>
-#include <Bount/GL/Layer.hpp>
-#include <Bount/Window/Subsystem.hpp>
-#include <Bount/UI/System.hpp>
+#include <Bount/Subsystem/Generic.hpp>
 
-#include <Bount/SVG/Ellipse.hpp>
-#include <Bount/SVG/Circle.hpp>
-#include <Bount/SVG/Rectangle.hpp>
-#include <Bount/SVG/Text.hpp>
+import Bount.UI.Subsystem;
+import Bount.SVG.Rectangle;
+import Bount.SVG.Ellipse;
+import Bount.SVG.Circle;
+import Bount.Window.Subsystem;
+import Bount.Graphics.Subsystem;
+import Bount.Graphics.Layer;
+import Bount.Event.Base;
 
 using namespace Bount;
 
-class ShapeLayer : public GL::Layer
+class ShapeLayer : public Graphics::Layer
 {
     std::unique_ptr<SVG::Rectangle> rectangle;
 
 public:
     ShapeLayer()
     {
-        rectangle = std::unique_ptr<SVG::Rectangle>(new SVG::Rectangle(SVG::File("SVG/Examples/Text1.svg")));
+        rectangle = std::unique_ptr<SVG::Rectangle>(new SVG::Rectangle(SVG::File("SVG/Examples/Rectangle1.svg")));
     }
-    void handleEvent(const GL::Event& event) override
+    void handleEvent(const Event::Base& event) override
     {
 
     }
@@ -31,23 +32,15 @@ public:
 
 int main(int argc, char* argv[])
 {
-    Window::Subsystem::getInstance();
-    GL::Subsystem::getInstance();
+    Graphics::Subsystem::getInstance().startup();
+    UI::Subsystem::getInstance().startup();
 
-    // Initialization
-    GL::Subsystem::getInstance().startup();
-    UI::System::instance().initialize();
-
-    // Setup
     auto myShapeLayer = new ShapeLayer;
-    Window::Subsystem::getInstance().getLayers().append(std::shared_ptr<GL::Layer>(myShapeLayer));
+    Window::Subsystem::getInstance().getLayers().append(std::shared_ptr<Graphics::Layer>(myShapeLayer));
 
-    // Run
-    GL::Subsystem::getInstance().runGameLoop();
+    Graphics::Subsystem::getInstance().runGameLoop();
+    UI::Subsystem::getInstance().shutdown();
+    Graphics::Subsystem::getInstance().shutdown();
 
-    // Cleanup
-    UI::System::instance().shutdown();
-    GL::Subsystem::getInstance().shutdown();
-    
     return 0;
 }
